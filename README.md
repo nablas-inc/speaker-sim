@@ -17,4 +17,4 @@ This repository is based on the [tts-asr-eval-suite](https://github.com/naba89/t
 
 - If system `ffmpeg` is not of version `>=4.4, <7`, use `conda install -c conda-forge 'ffmpeg<7'`, or when creating a new environment `conda create -n <env_name> -c conda-forge ffmpeg==6.1.2 python==3.12.4`. 
 
-  For details see [torchaudio installation](https://docs.pytorch.org/audio/main/installation.html#optional-dependencies).
+  For details see [torchaudio installation](https://docs.pytorch.org/audio/main/installation.html#optional-dependencies). `ffmpeg` of a proper version is necessary to load `.mp3` files using `torchaudio`.
