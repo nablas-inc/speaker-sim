@@ -1,6 +1,9 @@
+pyarrow==16.1.0
+setuptools==80.10.2
 streamlit
 torch
 torchaudio
+torchvision
 Resemblyzer
 transformers
 numpy
