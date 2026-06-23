@@ -11,10 +11,14 @@ streamlit run app.py
 ## Acknowledgements
 This repository is based on the [tts-asr-eval-suite](https://github.com/naba89/tts-asr-eval-suite/tree/main) repository.
 
-## Update Notes June 2026
+## Update Notes June 2026 2.0
 
-- Updated `requirements.txt` for strict version control of two modules
+- Added `Dockerfile` to build the app into a docker image.
 
-- If system `ffmpeg` is not of version `>=4.4, <7`, use `conda install -c conda-forge 'ffmpeg<7'`, or when creating a new environment `conda create -n <env_name> -c conda-forge ffmpeg==6.1.2 python==3.12.4`. 
+  To build: `docker build -t ss-app .`
 
-  For details see [torchaudio installation](https://docs.pytorch.org/audio/main/installation.html#optional-dependencies). `ffmpeg` of a proper version is necessary to load `.mp3` files using `torchaudio`.
+  To run: `docker run -d --name app_run --gpus all -p 8501:8501 ss-app:latest`
+
+- Separated methods to load large models in `load_models.py` (~2 minutes before app is booted)
+
+  Add `HF_TOKEN` environment variable for faster loading
