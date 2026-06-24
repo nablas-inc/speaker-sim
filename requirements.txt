@@ -4,6 +4,7 @@ streamlit
 torch
 torchaudio
 torchvision
+resemblyzer
 transformers
 numpy
 s3prl
