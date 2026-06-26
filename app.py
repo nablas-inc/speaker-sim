@@ -4,9 +4,9 @@ Author: Ken Maeda
 """
 
 import streamlit as st
-import torch
 from typing import Dict, List
-from tts_asr_eval_suite.secs import SECS
+
+from speaker_service import AVAILABLE_METHODS, compare_audio_files
 
 
 # Set page config
@@ -23,20 +23,15 @@ if 'similarity_results' not in st.session_state:
 
 def get_device() -> str:
     """Get the appropriate device (CPU/CUDA)."""
-    return "cuda" if torch.cuda.is_available() else "cpu"
+    from speaker_service import get_device as service_get_device
+
+    return service_get_device()
 
 
 def process_audio_files(file1_path: str, file2_path: str, selected_methods: List[str]) -> Dict:
     """Process audio files and return similarity scores."""
-    device = get_device()
-
-    # Initialize SECS with selected methods
-    secs = SECS(device=device, methods=selected_methods)
-
-    # Calculate similarity
     try:
-        similarity_scores = secs(file1_path, file2_path)
-        return similarity_scores
+        return compare_audio_files(file1_path, file2_path, selected_methods)
     except Exception as e:
         st.error(f"Error processing audio files: {str(e)}")
         return None
@@ -48,16 +43,9 @@ def main():
     # Sidebar for model selection
     st.sidebar.title("Model Settings")
 
-    available_methods = [
-        'resemblyzer',
-        'wavlm_large_sv',
-        'wavlm_base_plus_sv',
-        'ecapa2'
-    ]
-
     selected_methods = st.sidebar.multiselect(
         "Select Methods",
-        available_methods,
+        list(AVAILABLE_METHODS),
         default=['ecapa2'],
         help="Choose one or more methods for similarity detection"
     )

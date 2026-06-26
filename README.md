@@ -8,6 +8,40 @@
 streamlit run app.py
 ```
 
+## Start the API
+```bash
+uvicorn api:app --host 0.0.0.0 --port 8000
+```
+
+## Start the API with Docker Compose
+```bash
+APP_MODE=api docker compose up --build
+```
+
+## Compare speakers via API
+```bash
+curl -X POST http://localhost:8000/speaker/compare \
+  -F "file1=@speaker_a.wav" \
+  -F "file2=@speaker_b.wav" \
+  -F "methods=ecapa2"
+```
+
+The API returns normalized similarity scores from `0.0` to `1.0`.
+
+Example response:
+```json
+{
+  "similarity_score": 0.873,
+  "scores": {
+    "SECS (ecapa2)": 0.873
+  },
+  "range": {
+    "min": 0.0,
+    "max": 1.0
+  }
+}
+```
+
 ## Acknowledgements
 This repository is based on the [tts-asr-eval-suite](https://github.com/naba89/tts-asr-eval-suite/tree/main) repository.
 
